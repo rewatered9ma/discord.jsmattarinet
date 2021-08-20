@@ -1,0 +1,14 @@
+client.on('message', message =>{
+  if (message.author.id == client.user.id || message.author.bot){
+    return;
+  }
+  if (message.content.match(/^！おみくじ/) ||
+      (message.isMemberMentioned(client.user) && message.content.match(/おみくじ/))){
+    let arr = ["大吉", "吉", "凶", "ぽてと", "大凶", "しゅうまい君","じゃがいも","やる気なし！"];
+    lottery(message.channel.id, arr);
+  }
+});
+
+===以下解説===
+5行目！おみくじの部分は反応するコマンド
+7行目の大吉などの部分が抽選されて選ばれるもの
