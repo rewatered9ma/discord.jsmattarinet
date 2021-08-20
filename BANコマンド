@@ -1,0 +1,24 @@
+client.on("message", async message => {
+  if (message.content.startsWith("!ban") && message.guild) {
+    if (!message.member.permissions.has("BAN_MEMBERS"))
+      return message.channel.send(
+        "そのコマンド使うなんて頭おかしいわね！"
+      );
+    if (message.mentions.members.size !== 1)
+      return message.channel.send("BANするメンバーを1人指定してください");
+    const member = message.mentions.members.first();
+    if (!member.bannable)
+      return message.channel.send("botがこのユーザーをBANすることができません");
+
+    await member.ban();
+
+    await message.channel.send(`${member.user.tag} をBANしました`);
+  }
+});
+
+===以下解説===
+2行目!banは反応するコマンド（変更可能）
+5行目の送信メッセージは"BANパーミッション"を持ってないプレイヤーが実行したときのメッセージ
+8行目の送信メッセージはメンションにて指定されていないときのメッセージ
+11行目のメッセージはBANをすることができなかったときに送信するメッセージ
+15行のメッセージはBANに成功したときのメッセージ
